@@ -1,7 +1,6 @@
 import { PAYMENT_STATUS } from '../../types/project';
 import { Wallet, Target, AlertCircle, FileText, CheckCircle, XCircle, Briefcase, Percent, TrendingUp, ArrowRightLeft } from 'lucide-react';
 import { formatNumber } from '../../utils/formatNumber';
-import { StatusBadge } from '../StatusBadge';
 
 export function StatsCards({ projects }) {
   // KPI 1: Montant total des attachements

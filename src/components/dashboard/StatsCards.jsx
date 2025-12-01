@@ -1,5 +1,5 @@
 import { PAYMENT_STATUS } from '../../types/project';
-import { Wallet, Target, AlertCircle, FileText, CheckCircle, XCircle, Briefcase, Percent, TrendingUp, ArrowRightLeft } from 'lucide-react';
+import { Wallet, Target, AlertCircle, FileText, CheckCircle, XCircle, Briefcase, Percent } from 'lucide-react';
 import { formatNumber } from '../../utils/formatNumber';
 
 export function StatsCards({ projects }) {
@@ -9,14 +9,14 @@ export function StatsCards({ projects }) {
   // KPI 2: Total des montants HT
   const totalMontantHT = projects.reduce((sum, p) => sum + (p.montantHT || 0), 0);
 
-  // KPI 3: Total montant HT des factures payés
+  // KPI 3: Total montant HT des factures payées
   const totalPayes = projects
     .filter(p => p.statue1Facture === PAYMENT_STATUS.PAID)
     .reduce((sum, p) => sum + (p.montantHT || 0), 0);
 
-  // KPI 4: Total Montant HT des factures impayés
-  const totalImpayes = projects
-    .filter(p => p.statue1Facture === PAYMENT_STATUS.UNPAID)
+  // KPI 4: Total Montant HT des factures non payées (tous statuts sauf "Payé")
+  const totalNonPayes = projects
+    .filter(p => p.statue1Facture !== PAYMENT_STATUS.PAID)
     .reduce((sum, p) => sum + (p.montantHT || 0), 0);
 
   // KPI 5: Nombre total des contrats
@@ -28,17 +28,14 @@ export function StatsCards({ projects }) {
   // KPI 7: Nombre total des factures payées
   const nombreFacturesPayees = projects.filter(p => p.statue1Facture === PAYMENT_STATUS.PAID).length;
 
-  // KPI 8: Nombre total des factures impayées
-  const nombreFacturesImpayees = projects.filter(p => p.statue1Facture === PAYMENT_STATUS.UNPAID).length;
+  // KPI 8: Nombre total des factures non payées (tous statuts sauf "Payé")
+  const nombreFacturesNonPayees = projects.filter(p => p.statue1Facture !== PAYMENT_STATUS.PAID).length;
 
   // KPI 9: Taux de paiement
   const tauxPaiement = nombreFactures > 0 ? (nombreFacturesPayees / nombreFactures) * 100 : 0;
 
-  // KPI 10: Différence HT - Attachement
-  const differenceHTAttachement = totalMontantHT - totalAttachements;
-
-  // KPI 11: Taux de variation HT/Attachement
-  const tauxVariation = totalAttachements > 0 ? ((totalMontantHT - totalAttachements) / totalAttachements) * 100 : 0;
+  // KPI 10: Taux de Non Payé
+  const tauxNonPaye = nombreFactures > 0 ? (nombreFacturesNonPayees / nombreFactures) * 100 : 0;
 
   const stats = [
     {
@@ -66,8 +63,8 @@ export function StatsCards({ projects }) {
       bgColor: 'bg-green-50'
     },
     {
-      title: 'Total HT Impayé',
-      value: `${formatNumber(totalImpayes)} DH`,
+      title: 'Total HT Non Payé',
+      value: `${formatNumber(totalNonPayes)} DH`,
       icon: XCircle,
       color: 'bg-red-500',
       textColor: 'text-red-600',
@@ -98,8 +95,8 @@ export function StatsCards({ projects }) {
       bgColor: 'bg-teal-50'
     },
     {
-      title: 'Factures Impayées',
-      value: nombreFacturesImpayees.toString(),
+      title: 'Factures Non Payées',
+      value: nombreFacturesNonPayees.toString(),
       icon: AlertCircle,
       color: 'bg-orange-500',
       textColor: 'text-orange-600',
@@ -114,21 +111,12 @@ export function StatsCards({ projects }) {
       bgColor: 'bg-emerald-50'
     },
     {
-      title: 'Différence HT - Attachement',
-      value: `${formatNumber(Math.abs(differenceHTAttachement))} DH`,
-      subtitle: differenceHTAttachement >= 0 ? 'HT Supérieur' : 'HT Inférieur',
-      icon: ArrowRightLeft,
-      color: differenceHTAttachement >= 0 ? 'bg-purple-500' : 'bg-amber-500',
-      textColor: differenceHTAttachement >= 0 ? 'text-purple-600' : 'text-amber-600',
-      bgColor: differenceHTAttachement >= 0 ? 'bg-purple-50' : 'bg-amber-50'
-    },
-    {
-      title: 'Taux Variation HT/Attachement',
-      value: `${tauxVariation >= 0 ? '+' : ''}${tauxVariation.toFixed(2)}%`,
-      icon: TrendingUp,
-      color: tauxVariation >= 0 ? 'bg-violet-500' : 'bg-rose-500',
-      textColor: tauxVariation >= 0 ? 'text-violet-600' : 'text-rose-600',
-      bgColor: tauxVariation >= 0 ? 'bg-violet-50' : 'bg-rose-50'
+      title: 'Taux de Non Payé',
+      value: `${tauxNonPaye.toFixed(1)}%`,
+      icon: AlertCircle,
+      color: 'bg-red-500',
+      textColor: 'text-red-600',
+      bgColor: 'bg-red-50'
     }
   ];
 

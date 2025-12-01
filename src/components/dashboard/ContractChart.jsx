@@ -12,7 +12,7 @@ export function ContractChart({ projects }) {
       if (invoice.statue1Facture === PAYMENT_STATUS.PAID) {
         existing.paye += invoice.montantHT;
       } else {
-        existing.impaye += invoice.montantHT;
+        existing.nonPaye += invoice.montantHT;
       }
     } else {
       acc.push({
@@ -20,7 +20,7 @@ export function ContractChart({ projects }) {
         totalHT: invoice.montantHT,
         totalAttachement: invoice.montantAttachement,
         paye: invoice.statue1Facture === PAYMENT_STATUS.PAID ? invoice.montantHT : 0,
-        impaye: invoice.statue1Facture === PAYMENT_STATUS.UNPAID ? invoice.montantHT : 0
+        nonPaye: invoice.statue1Facture !== PAYMENT_STATUS.PAID ? invoice.montantHT : 0
       });
     }
     return acc;
@@ -35,7 +35,7 @@ export function ContractChart({ projects }) {
             Payé: {formatNumber(payload[0].value)} DH
           </p>
           <p className="text-sm text-red-600">
-            Impayé: {formatNumber(payload[1].value)} DH
+            Non Payé: {formatNumber(payload[1].value)} DH
           </p>
           <p className="text-sm text-gray-600">
             Total: {formatNumber(payload[0].payload.totalHT)} DH
@@ -57,7 +57,7 @@ export function ContractChart({ projects }) {
           <Tooltip content={<CustomTooltip />} />
           <Legend wrapperStyle={{ fontSize: 12 }} />
           <Bar dataKey="paye" stackId="a" fill="#10b981" name="Payé" />
-          <Bar dataKey="impaye" stackId="a" fill="#ef4444" name="Impayé" />
+          <Bar dataKey="nonPaye" stackId="a" fill="#ef4444" name="Non Payé" />
         </BarChart>
       </ResponsiveContainer>
     </div>

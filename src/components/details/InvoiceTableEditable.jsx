@@ -301,7 +301,14 @@ export function InvoiceTableEditable({ invoices }) {
                     invoice={invoice}
                     field="statue1Facture"
                     type="select"
-                    options={[PAYMENT_STATUS.PAID, PAYMENT_STATUS.UNPAID]}
+                    options={[
+                      PAYMENT_STATUS.PAID,
+                      PAYMENT_STATUS.TRANSMIS_TRESO,
+                      PAYMENT_STATUS.EN_ORDONNANCEMENT,
+                      PAYMENT_STATUS.EN_VALIDATION,
+                      PAYMENT_STATUS.MANQUE_RECEPTION,
+                      PAYMENT_STATUS.REJECTED
+                    ]}
                   />
                 </td>
                 <td className="px-4 py-2 text-sm whitespace-nowrap">

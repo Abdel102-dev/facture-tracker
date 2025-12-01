@@ -174,20 +174,35 @@ export function InvoiceTable({ invoices }) {
                   <td className="px-4 py-3 text-sm">
                     {isEditing ? (
                       <select
-                        value={currentData.paymentStatus}
-                        onChange={(e) => handleChange('paymentStatus', e.target.value)}
-                        className="w-full px-2 py-1 border border-gray-300 rounded"
+                        value={currentData.statue1Facture || PAYMENT_STATUS.PAID}
+                        onChange={(e) => handleChange('statue1Facture', e.target.value)}
+                        className="w-full px-2 py-1 border border-gray-300 rounded text-xs"
                       >
+                        <option value="">{currentData.statue1Facture || 'Sélectionner un statut'}</option>
                         <option value={PAYMENT_STATUS.PAID}>{PAYMENT_STATUS.PAID}</option>
-                        <option value={PAYMENT_STATUS.UNPAID}>{PAYMENT_STATUS.UNPAID}</option>
+                        <option value={PAYMENT_STATUS.TRANSMIS_TRESO}>{PAYMENT_STATUS.TRANSMIS_TRESO}</option>
+                        <option value={PAYMENT_STATUS.EN_ORDONNANCEMENT}>{PAYMENT_STATUS.EN_ORDONNANCEMENT}</option>
+                        <option value={PAYMENT_STATUS.EN_VALIDATION}>{PAYMENT_STATUS.EN_VALIDATION}</option>
+                        <option value={PAYMENT_STATUS.MANQUE_RECEPTION}>{PAYMENT_STATUS.MANQUE_RECEPTION}</option>
+                        <option value={PAYMENT_STATUS.REJECTED}>{PAYMENT_STATUS.REJECTED}</option>
                       </select>
                     ) : (
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        invoice.paymentStatus === PAYMENT_STATUS.PAID
-                          ? 'bg-green-100 text-red-800'
-                          : 'bg-red-100 text-green-800'
+                        invoice.statue1Facture === PAYMENT_STATUS.PAID
+                          ? 'bg-green-100 text-green-800'
+                          : invoice.statue1Facture === PAYMENT_STATUS.TRANSMIS_TRESO
+                          ? 'bg-blue-100 text-blue-800'
+                          : invoice.statue1Facture === PAYMENT_STATUS.EN_ORDONNANCEMENT
+                          ? 'bg-purple-100 text-purple-800'
+                          : invoice.statue1Facture === PAYMENT_STATUS.EN_VALIDATION
+                          ? 'bg-yellow-100 text-yellow-800'
+                          : invoice.statue1Facture === PAYMENT_STATUS.MANQUE_RECEPTION
+                          ? 'bg-orange-100 text-orange-800'
+                          : invoice.statue1Facture === PAYMENT_STATUS.REJECTED
+                          ? 'bg-red-100 text-red-800'
+                          : 'bg-gray-100 text-gray-800'
                       }`}>
-                        {invoice.paymentStatus}
+                        {invoice.statue1Facture}
                       </span>
                     )}
                   </td>

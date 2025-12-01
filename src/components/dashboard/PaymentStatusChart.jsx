@@ -4,28 +4,28 @@ import { StatusBadge } from '../StatusBadge';
 import { formatNumber } from '../../utils/formatNumber';
 
 export function PaymentStatusChart({ projects }) {
-  const payeeAmount = projects
+  const payeAmount = projects
     .filter(p => p.statue1Facture === PAYMENT_STATUS.PAID)
     .reduce((sum, p) => sum + (p.montantHT || 0), 0);
 
-  const impayeeAmount = projects
-    .filter(p => p.statue1Facture === PAYMENT_STATUS.UNPAID)
+  const nonPayeAmount = projects
+    .filter(p => p.statue1Facture !== PAYMENT_STATUS.PAID)
     .reduce((sum, p) => sum + (p.montantHT || 0), 0);
 
   const paymentData = [
     {
-      name: 'Payée',
+      name: 'Payé',
       value: projects.filter(p => p.statue1Facture === PAYMENT_STATUS.PAID).length,
       color: '#10b981',
-      status: 'Payée',
-      amount: payeeAmount
+      status: 'Payé',
+      amount: payeAmount
     },
     {
-      name: 'Impayée',
-      value: projects.filter(p => p.statue1Facture === PAYMENT_STATUS.UNPAID).length,
+      name: 'Non Payé',
+      value: projects.filter(p => p.statue1Facture !== PAYMENT_STATUS.PAID).length,
       color: '#ef4444',
-      status: 'Impayée',
-      amount: impayeeAmount
+      status: 'Non Payé',
+      amount: nonPayeAmount
     }
   ];
 

@@ -1,7 +1,11 @@
 // Payment status constants
 export const PAYMENT_STATUS = {
-  PAID: 'Payée',
-  UNPAID: 'Impayée'
+  PAID: 'Payé',
+  TRANSMIS_TRESO: 'Transmis Tréso',
+  EN_ORDONNANCEMENT: 'En Ordonnancement',
+  EN_VALIDATION: 'En Validation',
+  MANQUE_RECEPTION: 'Manque Réception',
+  REJECTED: 'Rejeté'
 };
 
 // Invoice data structure with all fields from Excel

@@ -5,6 +5,7 @@ import { InvoiceTableEditable } from './details/InvoiceTableEditable';
 import { Filters } from './dashboard/Filters';
 import { Upload, Download, Plus } from 'lucide-react';
 import { excelDateToJSDate } from '../utils/formatDate';
+import { PAYMENT_STATUS } from '../types/project';
 import * as XLSX from 'xlsx-js-style';
 
 export function TableDetails() {
@@ -134,7 +135,7 @@ export function TableDetails() {
       delaiPaiement: '30',
       status2: '',
       montantHT: 0,
-      statue1Facture: 'Impayée',
+      statue1Facture: PAYMENT_STATUS.EN_VALIDATION,
       datePaiement: '',
       moisPaiement: '',
       fournisseur: '',

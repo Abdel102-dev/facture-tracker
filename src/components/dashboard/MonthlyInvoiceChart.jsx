@@ -17,8 +17,6 @@ export function MonthlyInvoiceChart({ projects }) {
       existing.nombreFactures += 1;
       if (invoice.statue1Facture === PAYMENT_STATUS.PAID) {
         existing.paye += invoice.montantHT;
-      } else {
-        existing.impaye += invoice.montantHT;
       }
     } else {
       acc.push({
@@ -26,8 +24,7 @@ export function MonthlyInvoiceChart({ projects }) {
         totalHT: invoice.montantHT,
         totalAttachement: invoice.montantAttachement,
         nombreFactures: 1,
-        paye: invoice.statue1Facture === PAYMENT_STATUS.PAID ? invoice.montantHT : 0,
-        impaye: invoice.statue1Facture === PAYMENT_STATUS.UNPAID ? invoice.montantHT : 0
+        paye: invoice.statue1Facture === PAYMENT_STATUS.PAID ? invoice.montantHT : 0
       });
     }
     return acc;
@@ -46,9 +43,6 @@ export function MonthlyInvoiceChart({ projects }) {
           </p>
           <p className="text-sm text-green-600">
             Payé: {formatNumber(payload[0].payload.paye)} DH
-          </p>
-          <p className="text-sm text-red-600">
-            Impayé: {formatNumber(payload[0].payload.impaye)} DH
           </p>
           <p className="text-sm text-gray-600">
             Nombre: {payload[0].payload.nombreFactures}
@@ -71,7 +65,6 @@ export function MonthlyInvoiceChart({ projects }) {
           <Legend wrapperStyle={{ fontSize: 12 }} />
           <Line type="monotone" dataKey="totalHT" stroke="#3b82f6" name="Total HT" strokeWidth={2} />
           <Line type="monotone" dataKey="paye" stroke="#10b981" name="Payé" strokeWidth={2} />
-          <Line type="monotone" dataKey="impaye" stroke="#ef4444" name="Impayé" strokeWidth={2} />
         </LineChart>
       </ResponsiveContainer>
     </div>
